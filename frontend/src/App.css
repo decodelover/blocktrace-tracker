@@ -8,6 +8,93 @@
     linear-gradient(180deg, #040816, #081224 60%, #09111f);
 }
 
+.app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 6, 23, 0.82);
+  backdrop-filter: blur(14px);
+}
+
+.loader-panel {
+  width: min(420px, 100%);
+  padding: 32px 28px;
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(8, 15, 33, 0.92)),
+    radial-gradient(circle at top, rgba(34, 197, 94, 0.12), transparent 38%);
+  box-shadow:
+    0 28px 80px rgba(2, 6, 23, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  text-align: center;
+}
+
+.loader-mark {
+  position: relative;
+  width: 116px;
+  height: 116px;
+  margin: 0 auto 22px;
+  display: grid;
+  place-items: center;
+}
+
+.loader-ring,
+.loader-core {
+  position: absolute;
+  border-radius: 999px;
+}
+
+.loader-ring-one,
+.loader-ring-two {
+  inset: 0;
+  border: 2px solid rgba(56, 189, 248, 0.2);
+}
+
+.loader-ring-one {
+  animation: spinSlow 1.9s linear infinite;
+}
+
+.loader-ring-two {
+  inset: 16px;
+  border-color: rgba(34, 197, 94, 0.26);
+  animation: spinReverse 1.3s linear infinite;
+}
+
+.loader-core {
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(145deg, #22c55e, #38bdf8);
+  box-shadow:
+    0 0 0 10px rgba(34, 197, 94, 0.08),
+    0 0 28px rgba(56, 189, 248, 0.45);
+  animation: pulseLoader 1.4s ease-in-out infinite;
+}
+
+.loader-eyebrow {
+  margin: 0 0 10px;
+  color: #67e8f9;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.loader-panel h2 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  line-height: 1.05;
+}
+
+.loader-panel p:last-child {
+  margin: 14px 0 0;
+  color: #cbd5e1;
+}
+
 .ambient {
   position: absolute;
   border-radius: 999px;
@@ -262,6 +349,10 @@
 .shortcut-chip,
 .ghost-button {
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -306,6 +397,15 @@
   color: #94a3b8;
 }
 
+.button-loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(2, 18, 13, 0.25);
+  border-top-color: #02120d;
+  animation: spinSlow 0.8s linear infinite;
+}
+
 .source-note {
   margin-top: 20px;
   padding: 16px 18px;
@@ -327,6 +427,28 @@
 .source-note p {
   margin: 0;
   color: #cbd5e1;
+}
+
+.lookup-loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(103, 232, 249, 0.16);
+  background: rgba(8, 145, 178, 0.08);
+  color: #bae6fd;
+  font-size: 0.92rem;
+}
+
+.lookup-loader-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #22c55e, #38bdf8);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+  animation: pulseDot 1s ease-in-out infinite;
 }
 
 .message-card {
@@ -412,6 +534,10 @@
 
 .signal-core-card strong {
   font-size: 1.9rem;
+}
+
+.signal-core-card.is-loading {
+  animation: pulseCard 1.2s ease-in-out infinite;
 }
 
 .signal-core-card span {
@@ -518,6 +644,45 @@
 
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseLoader {
+  0%,
+  100% {
+    transform: scale(0.92);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseCard {
+  0%,
+  100% {
+    box-shadow:
+      0 20px 44px rgba(2, 6, 23, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  50% {
+    box-shadow:
+      0 20px 44px rgba(8, 47, 73, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -638,6 +803,16 @@
 @media (max-width: 540px) {
   .hero-copy-block h1 {
     font-size: 2.5rem;
+  }
+
+  .loader-panel {
+    padding: 26px 20px;
+    border-radius: 24px;
+  }
+
+  .loader-mark {
+    width: 96px;
+    height: 96px;
   }
 
   .ambient {

@@ -1,4 +1,10 @@
-import { startTransition, useEffect, useState } from 'react'
+import {
+  startTransition,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from 'react'
 import './App.css'
 
 const DEFAULT_WALLET = '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM'
@@ -140,9 +146,11 @@ async function requestWalletData(address) {
 }
 
 function App() {
+  const hasTriggeredInitialLookup = useRef(false)
   const [walletAddress, setWalletAddress] = useState(DEFAULT_WALLET)
   const [walletData, setWalletData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [hasBooted, setHasBooted] = useState(false)
   const [error, setError] = useState('')
   const [typedWord, setTypedWord] = useState('wallets')
   const [clock, setClock] = useState(new Date())
@@ -191,6 +199,10 @@ function App() {
       })
     } finally {
       setIsLoading(false)
+
+      if (!hasBooted) {
+        setHasBooted(true)
+      }
     }
 
     if (options.clearInput) {
@@ -244,10 +256,6 @@ function App() {
     return () => window.clearTimeout(timeoutId)
   }, [])
 
-  useEffect(() => {
-    void trackWallet(DEFAULT_WALLET)
-  }, [])
-
   async function handleSubmit(event) {
     event.preventDefault()
     await trackWallet(walletAddress)
@@ -272,8 +280,36 @@ function App() {
     }
   }
 
+  const runInitialLookup = useEffectEvent(() => {
+    void trackWallet(DEFAULT_WALLET)
+  })
+
+  useEffect(() => {
+    if (hasTriggeredInitialLookup.current) {
+      return
+    }
+
+    hasTriggeredInitialLookup.current = true
+    runInitialLookup()
+  }, [])
+
   return (
     <main className="app-shell">
+      {!hasBooted ? (
+        <div className="app-loader" role="status" aria-live="polite">
+          <div className="loader-panel">
+            <div className="loader-mark">
+              <span className="loader-ring loader-ring-one" />
+              <span className="loader-ring loader-ring-two" />
+              <span className="loader-core" />
+            </div>
+            <p className="loader-eyebrow">Soltrace</p>
+            <h2>Tracing live Solana signals</h2>
+            <p>Warming up the tracker and loading the first wallet snapshot.</p>
+          </div>
+        </div>
+      ) : null}
+
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
       <div className="ambient ambient-three" />
@@ -330,7 +366,14 @@ function App() {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Loading...' : 'Track Wallet'}
+                  {isLoading ? (
+                    <>
+                      <span className="button-loader" aria-hidden="true" />
+                      Loading...
+                    </>
+                  ) : (
+                    'Track Wallet'
+                  )}
                 </button>
               </div>
 
@@ -370,6 +413,13 @@ function App() {
               <p>{sourceInfo.detail}</p>
             </div>
 
+            {isLoading && hasBooted ? (
+              <div className="lookup-loader" role="status" aria-live="polite">
+                <span className="lookup-loader-dot" />
+                <span>Fetching live wallet balance...</span>
+              </div>
+            ) : null}
+
             {error ? (
               <div className="message-card error-message">
                 <strong>Lookup failed</strong>
@@ -379,7 +429,7 @@ function App() {
           </div>
 
           <aside className="signal-stage">
-            <div className="signal-core-card">
+            <div className={`signal-core-card ${isLoading ? 'is-loading' : ''}`}>
               <p>Live SOL balance</p>
               <strong>
                 {walletData ? `${formatBalance(walletData.balance)} SOL` : '--'}
