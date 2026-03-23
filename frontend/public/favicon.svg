@@ -1,18 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0f172a"/>
-      <stop offset="1" stop-color="#020617"/>
+    <linearGradient id="panel" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2a1a0b"/>
+      <stop offset="1" stop-color="#0c0a08"/>
     </linearGradient>
-    <linearGradient id="beam" x1="18" y1="16" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#22c55e"/>
-      <stop offset="1" stop-color="#38bdf8"/>
+    <linearGradient id="coin" x1="18" y1="14" x2="46" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f97316"/>
     </linearGradient>
   </defs>
-  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#bg)"/>
-  <circle cx="32" cy="32" r="17" stroke="#134e4a" stroke-width="2.5"/>
-  <circle cx="32" cy="32" r="10" stroke="#0f766e" stroke-width="2.5"/>
-  <path d="M32 14v18l12 12" stroke="url(#beam)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="44" cy="44" r="5" fill="#facc15"/>
-  <circle cx="32" cy="32" r="4" fill="#e2e8f0"/>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#panel)"/>
+  <path d="M16 20.5C16 17.462 18.462 15 21.5 15H39.5L48 23.5V43.5C48 46.538 45.538 49 42.5 49H21.5C18.462 49 16 46.538 16 43.5V20.5Z" fill="#120f0c" stroke="rgba(255,255,255,0.08)"/>
+  <circle cx="32" cy="32" r="13" fill="url(#coin)"/>
+  <path d="M31 22.5V41.5M34.5 24.5V39.5M27.5 27.5H35.5C37.433 27.5 39 29.067 39 31C39 32.933 37.433 34.5 35.5 34.5H28.5C26.567 34.5 25 36.067 25 38C25 39.933 26.567 41.5 28.5 41.5H36.5" stroke="#2a1404" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.5 15V21.5C39.5 22.605 40.395 23.5 41.5 23.5H48" stroke="#4b2e15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

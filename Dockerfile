@@ -18,6 +18,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY backend ./backend
+COPY lib ./lib
 COPY --from=backend-deps /app/backend/node_modules ./backend/node_modules
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 

@@ -1,5 +1,7 @@
 export function GET() {
   return Response.json({
-    message: 'Soltrace backend is live and tracking.',
+    message: 'Blocktrace Bitcoin API is live.',
+    network: 'bitcoin-mainnet',
+    source: 'Blockstream Esplora',
   })
 }

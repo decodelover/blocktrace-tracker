@@ -1,4 +1,4 @@
-# Soltrace Deployment
+# Blocktrace Deployment
 
 This project is set up to deploy as a single service:
 
@@ -20,10 +20,10 @@ Required values:
 
 ```env
 PORT=5000
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+BITCOIN_API_BASE=https://blockstream.info/api
 ```
 
-For production, it is better to replace the public RPC URL with your own provider URL.
+For production, you can replace the public Blockstream API base URL with your preferred Bitcoin data provider if needed.
 
 ## Local development
 
@@ -54,13 +54,13 @@ http://localhost:5000
 Build the image:
 
 ```bash
-docker build -t soltrace .
+docker build -t blocktrace .
 ```
 
 Run the container:
 
 ```bash
-docker run -p 5000:5000 --env-file backend/.env soltrace
+docker run -p 5000:5000 --env-file backend/.env blocktrace
 ```
 
 Then open:
@@ -76,8 +76,8 @@ Use a host that can run a Docker container or a Node.js web service.
 The deployed app needs:
 
 - port binding through `PORT`
-- access to `SOLANA_RPC_URL`
-- outbound internet access so the backend can talk to Solana
+- access to `BITCOIN_API_BASE`
+- outbound internet access so the backend can talk to the Bitcoin data source
 
 ## Vercel deployment
 
@@ -91,10 +91,10 @@ Project settings:
 Environment variables:
 
 ```env
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+BITCOIN_API_BASE=https://blockstream.info/api
 ```
 
-You can also use your own RPC provider URL instead of the public endpoint.
+You can also use your own Bitcoin indexer or API base instead of the public Blockstream endpoint.
 
 Vercel will:
 

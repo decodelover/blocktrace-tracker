@@ -1,13 +1,13 @@
-# Soltrace
+# Blocktrace
 
-Live Solana wallet tracker built with React, Vite, Node.js, Express, and Solana Web3. Soltrace lets you paste a public Solana wallet address and fetch its live SOL balance through a simple dashboard.
-
-Live app: [https://soltrace-tracker.vercel.app](https://soltrace-tracker.vercel.app)
+Blocktrace is a Bitcoin-only address tracker built with React, Vite, Node.js, Express, and Vercel Functions. It lets you paste a public Bitcoin address and inspect live balance data, address type, pending movement, and recent on-chain activity from one dashboard.
 
 ## Features
 
-- Live Solana wallet balance lookup
-- Responsive dashboard UI
+- Live Bitcoin address balance lookup
+- Address type detection
+- Recent transaction summaries
+- Responsive, animated dashboard UI
 - Local Express backend for development
 - Vercel Functions for production API routes
 - One-domain deployment on Vercel
@@ -18,7 +18,7 @@ Live app: [https://soltrace-tracker.vercel.app](https://soltrace-tracker.vercel.
 - Vite
 - Node.js
 - Express
-- `@solana/web3.js`
+- Blockstream Esplora API
 - Vercel Functions
 
 ## Local Setup
@@ -49,7 +49,7 @@ http://localhost:5000
 ## API Routes
 
 - `/api/status`
-- `/api/wallet?address=<SOLANA_PUBLIC_KEY>`
+- `/api/wallet?address=<BITCOIN_ADDRESS>`
 
 ## Deployment
 
@@ -62,7 +62,7 @@ This repo is configured for Vercel:
 Set this environment variable in Vercel:
 
 ```env
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+BITCOIN_API_BASE=https://blockstream.info/api
 ```
 
 For a full deployment guide, see [DEPLOYMENT.md](./DEPLOYMENT.md).
