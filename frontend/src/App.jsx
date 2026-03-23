@@ -590,7 +590,7 @@ function App() {
           <div className="panel-head">
             <div>
               <p className="panel-label">Recent activity</p>
-              <h3>Latest Bitcoin transactions</h3>
+              <h3>Latest 3 Bitcoin transactions</h3>
             </div>
             <span className="transactions-count">
               {walletData?.recentTransactions?.length || 0} items
