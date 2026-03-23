@@ -19,14 +19,35 @@ const SAMPLE_WALLETS = [
 let preferredApiBase = null
 
 function formatBtc(amount) {
-  return Number(amount).toLocaleString(undefined, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 8,
-  })
+  const value = String(amount ?? '0').trim()
+
+  if (!/^-?\d+(\.\d+)?$/.test(value)) {
+    return value || '0'
+  }
+
+  const isNegative = value.startsWith('-')
+  const unsignedValue = isNegative ? value.slice(1) : value
+  const [wholePart, fractionPart = ''] = unsignedValue.split('.')
+  const groupedWhole = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  const trimmedFraction = fractionPart.replace(/0+$/, '')
+
+  return `${isNegative ? '-' : ''}${groupedWhole}${
+    trimmedFraction ? `.${trimmedFraction}` : ''
+  }`
 }
 
 function formatSats(amount) {
-  return Number(amount).toLocaleString()
+  const value = String(amount ?? '0').trim()
+
+  if (!/^-?\d+$/.test(value)) {
+    return value || '0'
+  }
+
+  const isNegative = value.startsWith('-')
+  const digits = isNegative ? value.slice(1) : value
+  const grouped = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+  return `${isNegative ? '-' : ''}${grouped}`
 }
 
 function formatDateTime(value) {
